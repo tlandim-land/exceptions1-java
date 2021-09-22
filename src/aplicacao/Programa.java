@@ -40,19 +40,14 @@ public class Programa {
 			System.out.print("DIGITE DATA SAIDA <DD/MM/AAAA>: ");
 			saida = sdf.parse(sc.next());
 			
-			Date agora = new Date();
-			
-			if (entrada.before(agora) || saida.before(agora)) {
-				System.out.println("ERRO! DATAS ENTRADA E SAIDA DEVEM SER FUTURAS");			
-			} 
-			else if (!saida.after(entrada)) {
-					System.out.println("ERRO! DATA DE SAIDA MAIOR QUE DATA DE ENTRADA");
-			} 
-				else {				
-					reserva.atualizaDatas(entrada, saida);
-					System.out.println("RESERVA " + reserva);
-					System.out.println();
-				}
+			String error = reserva.atualizaDatas(entrada, saida);
+					
+			if (error != null) {
+				System.out.println("ERRO NA RESERVA " + error);
+			} else {
+				System.out.println("RESERVA " + reserva);
+				System.out.println();
+			}
 		}
 		sc.close();	
 	}
