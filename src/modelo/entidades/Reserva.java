@@ -16,6 +16,10 @@ public class Reserva {
 	}
 	
 	public Reserva(Integer numero, Date entrada, Date saida) {
+		if (!saida.after(entrada)) {
+			throw new DominiosException("ERRO! DATA DE SAIDA MAIOR QUE DATA DE ENTRADA");
+		}			
+		
 		this.numero = numero;
 		this.entrada = entrada;
 		this.saida = saida;
@@ -44,22 +48,20 @@ public class Reserva {
 		return TimeUnit.DAYS.convert(diferenca, TimeUnit.MILLISECONDS);
 	}
 	
-	public String atualizaDatas(Date entrada, Date saida) {
+	public void atualizaDatas(Date entrada, Date saida) {
 		
 		Date agora = new Date();
 		
 		if (entrada.before(agora) || saida.before(agora)) {
-			return "ERRO! DATAS ENTRADA E SAIDA DEVEM SER FUTURAS";			
+			throw new DominiosException("ERRO! DATAS ENTRADA E SAIDA DEVEM SER FUTURAS");			
 		} 
 		
 		if (!saida.after(entrada)) {
-			return "ERRO! DATA DE SAIDA MAIOR QUE DATA DE ENTRADA";
+			throw new DominiosException("ERRO! DATA DE SAIDA MAIOR QUE DATA DE ENTRADA");
 		} 
 		
 		this.entrada = entrada;
 		this.saida = saida;
-		
-		return null;
 	}
 	
 	@Override
